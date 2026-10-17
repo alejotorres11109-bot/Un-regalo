@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para ti 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--cherry:#c81d4a;--ink:#5a2236;--gold:#e8c27a}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);overflow-x:hidden;background:linear-gradient(160deg,#ffd6e0,#fff0f5 45%,#ffe4d6);background-attachment:fixed}
+.fx{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.p{position:absolute;bottom:-60px;animation:rise linear forwards;user-select:none}
+@keyframes rise{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.scr{display:none;min-height:100vh;padding:24px 18px;position:relative;z-index:2;flex-direction:column;align-items:center;justify-content:center}
+.scr.on{display:flex;animation:fade .6s ease}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.glass{background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.8);border-radius:24px;box-shadow:0 12px 40px rgba(200,29,74,.15);padding:28px 22px;max-width:440px;width:100%;text-align:center}
+h1,h2{font-family:'Dancing Script',cursive;color:var(--cherry);font-size:2.4rem;line-height:1.1;margin-bottom:14px}
+p{line-height:1.6;font-size:1rem}
+.btn{font:600 15px 'Poppins',sans-serif;background:linear-gradient(135deg,#ff7a9c,var(--cherry));color:#fff;border:0;border-radius:999px;padding:13px 24px;cursor:pointer;box-shadow:0 8px 20px rgba(200,29,74,.3);transition:transform .2s;margin:6px}
+.btn:hover,.btn:active{transform:scale(1.06)}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.btn.ghost{background:rgba(255,255,255,.75);color:var(--cherry);box-shadow:none}
+.muted{font-size:.85rem;opacity:.7;margin-top:10px}
+/* sobre */
+.sobre{width:260px;height:170px;margin:30px auto;position:relative;cursor:pointer;perspective:800px}
+.sobre .cuerpo{position:absolute;inset:0;background:linear-gradient(135deg,#ffb3c6,#ff8fab);border-radius:14px;box-shadow:0 14px 30px rgba(200,29,74,.3)}
+.sobre .flap{position:absolute;top:0;left:0;right:0;height:50%;background:#ff9fb8;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s ease;z-index:3;border-radius:14px 14px 0 0}
+.sobre .corazon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:3rem;z-index:4;animation:latir 1.2s infinite}
+@keyframes latir{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.15)}}
+.sobre.open .flap{transform:rotateX(180deg)}
+.sobre.open .corazon{opacity:0;transition:opacity .3s}
+/* menu */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:440px;margin-top:18px}
+.tile{background:rgba(255,255,255,.7);border:0;border-radius:20px;padding:20px 10px;font:600 14px 'Poppins',sans-serif;color:var(--ink);cursor:pointer;box-shadow:0 8px 22px rgba(200,29,74,.12);transition:transform .2s}
+.tile span{display:block;font-size:2rem;margin-bottom:6px}
+.tile:hover,.tile:active{transform:scale(1.05)}
+/* carta */
+#cartaTxt{text-align:left;min-height:260px;white-space:pre-wrap;font-size:1rem;line-height:1.7}
+.cursor{display:inline-block;width:2px;background:var(--cherry);animation:blink 1s infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+#fraseSecreta{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--cherry);min-height:60px;margin-top:10px}
+/* ternura */
+.maquina{font-size:4rem;animation:vibra .15s infinite;display:none}
+.maquina.on{display:block}
+@keyframes vibra{0%,100%{transform:rotate(0)}50%{transform:rotate(-2deg)}}
+.barra{height:16px;background:rgba(200,29,74,.15);border-radius:99px;overflow:hidden;margin:18px 0 10px}
+.barra i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffb3c6,var(--cherry));transition:width .5s ease}
+#msg{min-height:50px;font-weight:600}
+.resultado{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--cherry);display:none;margin-top:14px;line-height:1.2}
+/* preguntas */
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.reac{min-height:60px;margin-top:14px;font-weight:600}
+/* sorpresas */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:440px;margin-top:14px}
+.card{height:150px;perspective:700px;cursor:pointer}
+.card .in{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.card.flip .in{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:12px;font-size:.85rem;text-align:center;box-shadow:0 8px 20px rgba(200,29,74,.15)}
+.card .f{background:linear-gradient(135deg,#ff9fb8,#ff7a9c);color:#fff;font-size:2.4rem}
+.card .b{background:#fff;transform:rotateY(180deg);flex-direction:column;gap:6px;font-size:.9rem;line-height:1.4}
+.card .b b{color:var(--cherry);font-size:.9rem}
+/* jardín */
+.jardin{position:relative;width:100%;max-width:440px;height:420px;margin-top:12px;border-radius:24px;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.9),rgba(255,214,224,.6));box-shadow:inset 0 0 40px rgba(255,255,255,.7),0 12px 40px rgba(200,29,74,.15);overflow:hidden}
+.flor{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border:0;background:none;font-size:2.4rem;cursor:pointer;transition:transform .3s;transform-origin:center}
+.flor:hover,.flor:active{transform:scale(1.3) rotate(-8deg)}
+.flor.abierta{transform:scale(1.2)}
+.flor.abierta::after{content:"";position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(rgba(255,255,255,.8),transparent 70%);animation:brillo 1.5s infinite}
+@keyframes brillo{50%{opacity:.3}}
+.mariposa{position:absolute;font-size:1.4rem;animation:vuela 6s ease-in-out infinite;pointer-events:none}
+@keyframes vuela{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
+#florMsg{min-height:70px;margin-top:14px;font-weight:600;font-size:1rem}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--cherry);color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;z-index:10;opacity:0;transition:opacity .4s;pointer-events:none;max-width:90%;text-align:center}
+.toast.on{opacity:1}
+.music{position:fixed;top:14px;right:14px;z-index:20;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.8);font-size:1.2rem;cursor:pointer;box-shadow:0 6px 16px rgba(200,29,74,.2)}
+.volver{position:fixed;top:14px;left:14px;z-index:20;padding:8px 16px;font-size:13px;display:none}
+.volver.on{display:inline-block}
+</style>
+</head>
+<body>
+
+<div class="fx" id="fx"></div>
+<button class="music" id="musicBtn" title="Música">🎵</button>
+<button class="btn ghost volver" id="volverBtn" onclick="go('menu')">← Volver</button>
+<div class="toast" id="toast"></div>
+
+<!-- 1. BIENVENIDA -->
+<section class="scr on" id="inicio">
+  <div class="glass">
+    <div class="sobre" id="sobre" onclick="abrirSobre()">
+      <div class="cuerpo"></div>
+      <div class="flap"></div>
+      <div class="corazon">💗</div>
+    </div>
+    <p>💌 <b>Psst...</b> tú, sí, tú.</p>
+    <p style="margin-top:10px">Alguien hizo algo especialmente para ti.</p>
+    <p style="margin-top:10px">Y no, no es una estafa... creo. JAJAJA ❤️</p>
+    <button class="btn" id="btnAbrir" onclick="abrirSobre()">Abrir mi sorpresita ✨</button>
+  </div>
+</section>
+
+<!-- MENÚ -->
+<section class="scr" id="menu">
+  <h1>Hola, personita bonita 💗</h1>
+  <p>Elige lo que quieras descubrir...</p>
+  <div class="menu">
+    <button class="tile" onclick="go('carta');escribirCarta()"><span>💌</span>Carta</button>
+    <button class="tile" onclick="go('ternura')"><span>🔍</span>Detector de ternura</button>
+    <button class="tile" onclick="go('preguntas');iniciarPreguntas()"><span>🫶</span>Preguntas</button>
+    <button class="tile" onclick="go('sorpresas')"><span>🎁</span>Sorpresas</button>
+    <button class="tile" onclick="go('jardin')" style="grid-column:span 2"><span>💘</span>Jardín de cumplidos</button>
+  </div>
+</section>
+
+<!-- 3. CARTA -->
+<section class="scr" id="carta">
+  <div class="glass">
+    <h2>Para ti</h2>
+    <div id="cartaTxt"></div>
+    <div id="fraseSecreta"></div>
+    <div style="margin-top:12px">
+      <button class="btn" id="btnFrase" onclick="fraseSecreta()" disabled>Frase secreta 🤫</button>
+      <button class="btn" onclick="corazones()">Corazones 💗</button>
+      <button class="btn ghost" onclick="guardarCarta()">Guardar como imagen 📸</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4. TERNURA -->
+<section class="scr" id="ternura">
+  <div class="glass">
+    <h2>El Detector Oficial de Ternura</h2>
+    <div class="maquina" id="maquina">🤖</div>
+    <div class="barra"><i id="barra"></i></div>
+    <div id="msg">Listo para analizar.</div>
+    <div class="resultado" id="resultado">999999% de ternura. Nuestro sistema no estaba preparado para ti. 💗</div>
+    <button class="btn" id="btnTernura" onclick="analizar()">Analizar mi ternura 🔍</button>
+  </div>
+</section>
+
+<!-- 5. PREGUNTAS -->
+<section class="scr" id="preguntas">
+  <div class="glass">
+    <h2>Preguntitas</h2>
+    <p class="muted" id="contador"></p>
+    <p style="margin:12px 0;font-size:1.05rem;font-weight:600" id="pregunta"></p>
+    <div class="opts" id="opts"></div>
+    <div class="reac" id="reac"></div>
+    <div>
+      <button class="btn ghost" id="btnAtras" onclick="atras()">← Anterior</button>
+      <button class="btn" id="btnSig" onclick="siguiente()" style="display:none">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SORPRESAS -->
+<section class="scr" id="sorpresas">
+  <h2>Sorpresitas 🎁</h2>
+  <p class="muted" id="contSorp">Toca una tarjeta para descubrirla</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- 7. JARDÍN -->
+<section class="scr" id="jardin">
+  <h2>El Jardín de los Cumplidos</h2>
+  <div class="jardin" id="jardinBox"></div>
+  <p id="florMsg">Toca una flor 🌷</p>
+</section>
+
+<script>
+/* ---------- Partículas ---------- */
+const fx = document.getElementById('fx');
+const EMOJIS = ['💗','❤️','✨','🌸','🌷','🦋','⭐','💕'];
+function particula(emoji, x, dur){
+  const s=document.createElement('span');
+  s.className='p';s.textContent=emoji;
+  s.style.left=(x??Math.random()*100)+'%';
+  s.style.fontSize=(12+Math.random()*18)+'px';
+  s.style.animationDuration=(dur??(8+Math.random()*8))+'s';
+  fx.appendChild(s);
+  setTimeout(()=>s.remove(),(dur??16)*1000);
+}
+setInterval(()=>{ if(fx.children.length<40) particula(EMOJIS[Math.floor(Math.random()*EMOJIS.length)]) },500);
+function confeti(n=60){
+  const colores=['#ff7a9c','#c81d4a','#e8c27a','#ffffff','#ffb6c8'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('span');
+    c.style.cssText=`position:fixed;top:-10px;left:${Math.random()*100}%;width:9px;height:14px;background:${colores[i%colores.length]};z-index:30;border-radius:2px;pointer-events:none;transition:transform 2.5s ease-in,opacity 2.5s`;
+    document.body.appendChild(c);
+    requestAnimationFrame(()=>{c.style.transform=`translate(${(Math.random()-.5)*200}px,110vh) rotate(${Math.random()*720}deg)`;c.style.opacity='0';});
+    setTimeout(()=>c.remove(),2600);
+  }
+}
+function corazones(){ for(let i=0;i<25;i++) setTimeout(()=>particula('💗',null,4+Math.random()*3),i*60); }
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
+
+/* ---------- Navegación ---------- */
+function go(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.getElementById('volverBtn').classList.toggle('on', id!=='inicio' && id!=='menu');
+  window.scrollTo(0,0);
+}
+
+/* ---------- Sobre ---------- */
+function abrirSobre(){
+  const s=document.getElementById('sobre');
+  if(s.classList.contains('open')) return;
+  s.classList.add('open');
+  document.getElementById('btnAbrir').disabled=true;
+  confeti(80);
+  setTimeout(()=>go('menu'),1400);
+}
+
+/* ---------- Carta ---------- */
+const PARRAFOS = [
+ "Holaaa, personita bonita. ❤️",
+ "No sé si te lo dicen lo suficiente, pero tienes algo especial. De esas cosas que no se explican fácilmente, pero que hacen que una persona se quede pensando en ti incluso después de despedirse.",
+ "Quería hacerte algo diferente, algo que te sacara una sonrisa y te recordara que hay personas que hacen los días más bonitos simplemente siendo ellas mismas.",
+ "Y bueno... si estás sonriendo mientras lees esto, misión cumplida. JAJAJA.",
+ "No tienes que responder nada especial. Solo quería regalarte un momentico bonito. 💗"
+];
+const FRASES = [
+ "Eres de esas personas que hacen que las cosas sencillas se sientan especiales.",
+ "Tu forma de ser ilumina más de lo que imaginas.",
+ "Hay días bonitos, y hay días bonitos porque tú existes."
+];
+let cartaEscrita=false, escribiendo=false;
+function escribirCarta(){
+  if(cartaEscrita||escribiendo) return;
+  escribiendo=true;
+  const el=document.getElementById('cartaTxt');
+  el.innerHTML='<span class="cursor"></span>';
+  const texto=PARRAFOS.join('\n\n');
+  let i=0;
+  const t=setInterval(()=>{
+    i++;
+    el.innerHTML=texto.slice(0,i).replace(/</g,'&lt;')+'<span class="cursor"></span>';
+    if(i>=texto.length){
+      clearInterval(t);
+      el.innerHTML=texto.replace(/</g,'&lt;');
+      cartaEscrita=true;escribiendo=false;
+      document.getElementById('btnFrase').disabled=false;
+    }
+  },28);
+}
+function fraseSecreta(){
+  const f=FRASES[Math.floor(Math.random()*FRASES.length)];
+  document.getElementById('fraseSecreta').textContent='“'+f+'”';
+  corazones();
+}
+function guardarCarta(){
+  const c=document.createElement('canvas');c.width=800;c.height=1000;
+  const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,800,1000);g.addColorStop(0,'#ffd6e0');g.addColorStop(1,'#ffe4d6');
+  x.fillStyle=g;x.fillRect(0,0,800,1000);
+  x.fillStyle='rgba(255,255,255,.8)';x.fillRect(50,50,700,900);
+  x.fillStyle='#c81d4a';x.font='bold 56px "Dancing Script", cursive';x.textAlign='center';
+  x.fillText('Para ti 💗',400,140);
+  x.fillStyle='#5a2236';x.font='30px Poppins, sans-serif';x.textAlign='left';
+  let y=220;
+  PARRAFOS.join('\n\n').split('\n').forEach(par=>{
+    if(!par) {y+=20;return;}
+    const words=par.split(' ');let line='';
+    words.forEach(w=>{
+      const test=line+w+' ';
+      if(x.measureText(test).width>640){x.fillText(line,80,y);line=w+' ';y+=44;}
+      else line=test;
+    });
+    x.fillText(line,80,y);y+=60;
+  });
+  const a=document.createElement('a');
+  a.download='carta-para-ti.png';a.href=c.toDataURL('image/png');a.click();
+  toast('Carta guardada como imagen 📸');
+}
+
+/* ---------- Detector de ternura ---------- */
+const PASOS = [
+ "Conectando con el universo...",
+ "Analizando nivel de belleza...",
+ "Buscando una cantidad normal de ternura...",
+ "ERROR: los niveles superan lo permitido por la ciencia. 💗"
+];
+function analizar(){
+  const btn=document.getElementById('btnTernura');
+  btn.disabled=true;
+  document.getElementById('resultado').style.display='none';
+  document.getElementById('maquina').classList.add('on');
+  const barra=document.getElementById('barra'), msg=document.getElementById('msg');
+  barra.style.width='0%';
+  let paso=0;
+  const iv=setInterval(()=>{
+    msg.textContent=PASOS[paso];
+    barra.style.width=((paso+1)/PASOS.length*100)+'%';
+    paso++;
+    if(paso===PASOS.length){
+      clearInterval(iv);
+      setTimeout(()=>{
+        document.getElementById('maquina').classList.remove('on');
+        document.getElementById('resultado').style.display='block';
+        confeti(120);
+        btn.disabled=false;btn.textContent='Analizar otra vez 🔍';
+      },900);
+    }
+  },1100);
+}
+
+/* ---------- Preguntas ---------- */
+const PREG = [
+ {q:"¿Qué prefieres: una salida bonita o quedarnos hablando durante horas?",
+  o:[["Una salida bonita 🌙","¡Planazo! Yo llevo las ganas. 😄"],["Hablar horas 🗣️","Eso ya es un plan perfecto. JAJA."],["Las dos, obvio 💗","Eres una persona muy ambiciosa, me gusta. 😂"]]},
+ {q:"¿Qué tan probable es que sonrías cuando recibes un mensaje bonito?",
+  o:[["Muy probable 😊","Entonces misión cumplida, con este mensaje ya sonreíste un poco. 💗"],["Siempre 🥹","Qué honor. Yo me pongo nerviosa solo de pensarlo. JAJA"],["Depende del mensaje 😏","Ajá, entonces hay que esforzarse un poquito más. 😂"]]},
+ {q:"¿Quién crees que es la persona más dramática de esta historia? 😂",
+  o:[["Yo, claro 🙋","Tranquila, tu drama tiene mucho encanto. 💗"],["Tú 👀","Ay no, te devuelvo el título con cariño. JAJAJA"],["Los dos 🎭","Un equipo dramático perfecto, ¿no? 😂"]]},
+ {q:"Si tu día fuera una película, ¿sería una comedia romántica o un desastre adorable?",
+  o:[["Comedia romántica 🎬","Me encanta, con final feliz garantizado. ✨"],["Desastre adorable 🌪️","Los mejores personajes son los que tienen caos bonito. 💗"],["Documental, sin drama 📽️","Aburrido... pero respeto tu estilo. JAJA"]]}
+];
+let pIdx=0; const resp=[];
+function iniciarPreguntas(){ pIdx=0; resp.length=0; renderPregunta(); }
+function renderPregunta(){
+  const p=PREG[pIdx];
+  document.getElementById('contador').textContent=`Pregunta ${pIdx+1} de ${PREG.length}`;
+  document.getElementById('pregunta').textContent=p.q;
+  const cont=document.getElementById('opts');cont.innerHTML='';
+  p.o.forEach((op,i)=>{
+    const b=document.createElement('button');
+    b.className='btn'+(resp[pIdx]===i?'':' ghost');
+    b.textContent=op[0];
+    b.onclick=()=>responder(i);
+    cont.appendChild(b);
+  });
+  const reac=document.getElementById('reac');
+  reac.textContent=resp[pIdx]!==undefined?p.o[resp[pIdx]][1]:'';
+  document.getElementById('btnAtras').style.visibility=pIdx===0?'hidden':'visible';
+  const sig=document.getElementById('btnSig');
+  sig.style.display=resp[pIdx]!==undefined?'inline-block':'none';
+  sig.textContent=pIdx===PREG.length-1?'Ver resultado 💗':'Siguiente →';
+}
+function responder(i){
+  resp[pIdx]=i;
+  corazones();
+  renderPregunta();
+}
+function siguiente(){
+  if(pIdx<PREG.length-1){pIdx++;renderPregunta();}
+  else {
+    const p=document.getElementById('pregunta');
+    document.getElementById('opts').innerHTML='';
+    document.getElementById('reac').textContent='';
+    document.getElementById('btnSig').style.display='none';
+    document.getElementById('contador').textContent='¡Fin del juego! 🎉';
+    p.innerHTML='Tus respuestas son muy <b>tuyas</b>, y me encantan. 💗';
+    confeti(100);
+    const b=document.createElement('button');b.className='btn';b.textContent='Jugar otra vez 🔁';
+    b.onclick=iniciarPreguntas;document.getElementById('opts').appendChild(b);
+  }
+}
+function atras(){ if(pIdx>0){pIdx--;renderPregunta();} }
+
+/* ---------- Sorpresas ---------- */
+const SORP = [
+ ["💗 Un cumplido para ti","Tu risa tiene una forma de hacer que cualquier momento se sienta mejor."],
+ ["🫂 Abrazo virtual","Te mando un abrazo fuerte. Tómalo, es gratis. 🤗💗"],
+ ["😂 Chiste malísimo","¿Qué le dice una estrella a otra? Nada, solo brilla. JAJAJA ⭐"],
+ ["✨ Recordatorio","No necesitas tener un día perfecto para merecer cosas bonitas."],
+ ["🤫 Secreto","Este juego lo hice pensando en ti. Sí, ya lo sabías. JAJA"],
+ ["🎁 Sorpresa aleatoria","Hoy te toca: eres la persona más linda que alguien pudo elegir para sorprender. 💘"]
+];
+let abiertas=0;
+function renderSorpresas(){
+  const g=document.getElementById('grid');g.innerHTML='';
+  SORP.forEach((s,i)=>{
+    const c=document.createElement('div');c.className='card';
+    c.innerHTML=`<div class="in"><div class="f">${s[0].split(' ')[0]}</div><div class="b"><b>${s[0].slice(s[0].indexOf(' ')+1)}</b>${s[1]}</div></div>`;
+    c.onclick=()=>{
+      if(c.classList.contains('flip')) return;
+      c.classList.add('flip');abiertas++;
+      particula('💗');
+      document.getElementById('contSorp').textContent=`Descubiertas: ${abiertas} de ${SORP.length}`;
+      if(abiertas===3) toast('🔓 ¡Desbloqueaste un secreto extra! Mira la carta otra vez 💌');
+      if(abiertas===SORP.length){ toast('🎉 ¡Las descubriste todas! Eres increíble 💗'); confeti(80); }
+    };
+    g.appendChild(c);
+  });
+}
+renderSorpresas();
+
+/* ---------- Jardín ---------- */
+const FLORES = [
+ ["🌷",20,25,"Tu sonrisa podría mejorar un lunes."],
+ ["🌸",70,20,"Tienes una forma especial de hacer que las cosas sencillas sean bonitas."],
+ ["🌹",45,45,"Nunca subestimes lo bonito que puede ser tu efecto en alguien."],
+ ["🌺",15,65,"Eres una combinación peligrosa de ternura y personalidad. JAJAJA."],
+ ["🌼",78,62,"Contigo, hasta los días grises se ven un poquito dorados. ✨"],
+ ["💐",40,78,"Me alegra que existas, aunque sea desde lejos. 💗"],
+ ["🪷",85,85,"Eres de esas personas que hacen que los lugares se sientan más bonitos."],
+ ["🌻",10,90,"Tu presencia es mi flor favorita de todo el jardín."]
+];
+const descubiertas=new Set();
+const box=document.getElementById('jardinBox');
+FLORES.forEach((f,i)=>{
+  const b=document.createElement('button');
+  b.className='flor';b.textContent=f[0];
+  b.style.left=f[1]+'%';b.style.top=f[2]+'%';
+  b.onclick=()=>{
+    b.classList.add('abierta');
+    document.getElementById('florMsg').textContent=f[3];
+    particula('✨',f[1],3);
+    descubiertas.add(i);
+    if(descubiertas.size===FLORES.length){
+      document.getElementById('florMsg').textContent='🌈 Descubriste todas las flores. Mereces un jardín entero para ti. 💗';
+      confeti(120);
+    }
+  };
+  box.appendChild(b);
+});
+for(let i=0;i<4;i++){
+  const m=document.createElement('span');m.className='mariposa';m.textContent='🦋';
+  m.style.left=(10+i*22)+'%';m.style.top=(10+(i%2)*40)+'%';m.style.animationDelay=(i*-1.3)+'s';
+  box.appendChild(m);
+}
+box.addEventListener('mousemove',e=>{
+  const r=box.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+  box.querySelectorAll('.mariposa').forEach((m,i)=>{m.style.translate=`${x*(i+1)*10}px ${y*(i+1)*10}px`});
+});
+
+/* ---------- Música (síntesis suave, sin archivos externos) ---------- */
+let ctx=null, musicOn=false, musicTimer=null;
+const NOTAS=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46];
+function tocarNota(f,t){
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type='sine';o.frequency.value=f;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.05);g.gain.exponentialRampToValueAtTime(.001,t+1.2);
+  o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+1.3);
+}
+document.getElementById('musicBtn').onclick=()=>{
+  musicOn=!musicOn;
+  const b=document.getElementById('musicBtn');
+  if(musicOn){
+    ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+    if(ctx.state==='suspended') ctx.resume();
+    let i=0;
+    const tick=()=>{tocarNota(NOTAS[i%NOTAS.length],ctx.currentTime);i++;};
+    tick();musicTimer=setInterval(tick,600);
+    b.textContent='🔊';
+  } else {
+    clearInterval(musicTimer);b.textContent='🎵';
+  }
+};
+</script>
+</body>
+</html>
